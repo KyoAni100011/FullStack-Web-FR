@@ -1,58 +1,102 @@
-import { UserModel } from "../models/user.js";
+const User = require("../models/user");
+const ErrorResponse = require('../utils/errorResponse');
 
-export const loginUser = async (req, res) => {
-  const { email, password, role } = req.body;
+
+exports.signUp = async (req, res, next) => {
+
+  const { email } = req.body;
+  const userExist = await User.findOne({ email });
+
   try {
-    await UserModel.findOne({ email: email }).then((user) => {
-      if (user) {
-        if (user.password == password) {
-          res.status(201).json({
-            data: user,
-            message: "Login successfully",
-          });
-        } else {
-          res.status(401).json({
-            message: "Your password doesn't match",
-          });
-        }
-      } else {
-        res.status(401).json({
-          message: "I can't find your email",
-        });
-      }
-    });
-  } catch (err) {
-    console.log(err);
+    const user = await User.create(req.body);
+    res.status(201).json({
+      success: true,
+      user
+    })
+
+  } catch (error) {
+    console.log(error);
+    next(error);
+
   }
-};
 
-export const signUpUser = async (req, res) => {
-  const { email, password, username, role } = req.body;
-  req.body["name"] = req.body["username"];
-  await UserModel.findOne({ email: email }).then((user) => {
-    if (user) {
-      if (user.username == username) {
-        res.status(401).json({
-          message: "Username has been existed",
-        });
-      } else if (user.password != password) {
-        res.status(401).json({
-          message: "Your password doesn't match",
-        });
-      } else {
-        res.status(401).json({
-          message: "Email has been existed",
-        });
-      }
-    } else {
-      const user = new UserModel(req.body);
-      user.save();
-      res.json({
-        status: 200,
-        data: user,
-        message: "Sign up successfully",
-      });
+}
+
+
+exports.signIn = async (req, res, next) => {
+
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+
+      return next(new ErrorResponse('E-mail and password are required', 400))
     }
-  });
-};
 
+    // check user e-mail
+    const user = await User.findOne({ email });
+    if (!user) {
+
+      return next(new ErrorResponse('Invalid credentials', 400))
+    }
+
+    // verify user password
+    const isMatched = await user.comparePassword(password);
+    if (!isMatched) {
+
+      return next(new ErrorResponse('Invalid credentials', 400))
+    }
+
+    generateToken(user, 200, res);
+  }
+  catch (error) {
+    console.log(error);
+
+    next(new ErrorResponse('Cannot log in, check your credentials', 400))
+  }
+
+}
+
+
+const generateToken = async (user, statusCode, res) => {
+
+  const token = await user.jwtGenerateToken();
+
+  const options = {
+    httpOnly: true,
+    expires: new Date(Date.now() + process.env.EXPIRE_TOKEN)
+  };
+
+  res
+    .status(statusCode)
+    .cookie('token', token, options)
+    .json({ success: true, token })
+}
+
+
+//LOG OUT USER
+exports.logOut = (req, res, next) => {
+  res.clearCookie('token');
+  res.status(200).json({
+    success: true,
+    message: "Logged out"
+  })
+}
+
+
+
+
+// exports.singleUser = async (req, res, next) => {
+
+//   try {
+//     const user = await User.findById(req.params.id);
+//     res.status(200).json({
+//       sucess: true,
+//       user
+//     })
+
+//   } catch (error) {
+//     next(error)
+
+//   }
+
+// }
