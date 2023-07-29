@@ -1,71 +1,76 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
-const userSchema = new mongoose.Schema({
-
-  name: {
-    type: String,
-    trim: true,
-    required: [true, 'Please add a Name'],
-    maxlength: 32
-  },
-
-  email: {
-    type: String,
-    trim: true,
-    required: [true, 'Please add a E-mail'],
-    unique: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please add a valid E-mail'
-    ]
-
-  },
-
-  password: {
-    type: String,
-    trim: true,
-    required: [true, 'Please add a Password'],
-    minlength: [6, 'password must have at least six(6) characters'],
-    match: [
-      /^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]+$/,
-      'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and a special characters'
-    ]
-  },
-
-  role: {
-    type: Number,
-    default: 0, // 0 = user, 1 = admin
-
-  },
-
+var userSchema = new mongoose.Schema({
+    firstname: {
+        type: String,
+        required: true,
+    },
+    lastname: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    mobile: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    role: {
+        type: String,
+        default: 'user',
+    },
+    cart: {
+        type: Array,
+        default: [],
+    },
+    address: [
+        { type: mongoose.Types.ObjectId, ref: 'Address' }
+    ],
+    wishlist: [
+        { type: mongoose.Types.ObjectId, ref: 'Product' }
+    ],
+    isBlocked: {
+        type: Boolean,
+        default: false,
+    },
+    refreshToken: {
+        type: String,
+    },
+    passwordChangedAt: {
+        type: String
+    },
+    passwordResetToken: { // used for password reset
+        type: String
+    },
+    passwordResetExpires: { // used for password reset
+        type: String
+    }
 }, { timestamps: true });
 
-
-
-// encrypting password before saving
 userSchema.pre('save', async function (next) {
-
-  if (!this.isModified('password')) {
-    next()
-  }
-  this.password = await bcrypt.hash(this.password, 10);
-});
-
-
-
-// verify password
-userSchema.methods.comparePassword = async function (yourPassword) {
-  return await bcrypt.compare(yourPassword, this.password); // this.password is the hashed password
+    if (!this.isModified('password')) next();
+    const salt = bcrypt.genSaltSync(10);
+    this.password = await bcrypt.hash(this.password, salt);
+})
+userSchema.methods = {
+    isCorrectPassword: async function (password) {
+        return await bcrypt.compare(password, this.password);
+    },
+    createPasswordChangedToken: function () {
+        const resetToken = crypto.randomBytes(32).toString('hex'); // generate a random string
+        this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex'); // hash the resetToken and save it to the database
+        this.passwordResetExpires = Date.now() + 15 * 60 * 1000; // 15 minutes
+        return resetToken;
+    }
 }
-
-// get the token
-userSchema.methods.jwtGenerateToken = function () {
-  return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
-    expiresIn: 3600   // 1 hour
-  });
-}
-
-
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);
