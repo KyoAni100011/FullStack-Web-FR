@@ -2,7 +2,7 @@ export const rows = [
     {
       shopName: "Fashion Revive",
       idBuyer:'64d4f53a70c45703b1498acd',
-      idSeller:'5e1a0651741b255ddda996c4',
+      idSeller:'64ce8ef9567a2050d86bce9a',
       product: "T-shirt",
       price: "200.000",
       status: "Complete",
@@ -12,7 +12,7 @@ export const rows = [
     {
       shopName: "P shop",
       idBuyer:"64d4f53a70c45703b1498acd",
-      idSeller:"5e1a0651741b255ddda996c4",
+      idSeller:"64ce8ef9567a2050d86bce9a",
       product: "T-shirt",
       price: "200.000",
       status: "Shipping",
@@ -22,7 +22,7 @@ export const rows = [
     {
       shopName: "XYZ Store",
       idBuyer:"64d4f53a70c45703b1498acd",
-      idSeller:"5e1a0651741b255ddda996c4",
+      idSeller:"64ce8ef9567a2050d86bce9a",
       product: "Jeans",
       price: "350.000",
       status: "Expense",
@@ -32,7 +32,7 @@ export const rows = [
     {
       shopName: "ABC Mart",
       idBuyer:"64d4f53a70c45703b1498acd",
-      idSeller:"5e1a0651741b255ddda996c4",
+      idSeller:"64ce8ef9567a2050d86bce9a",
       product: "Sneakers",
       price: "180.000",
       status: "Shipping",
@@ -42,7 +42,7 @@ export const rows = [
     {
       shopName: "Fashion World",
       idBuyer:"64d4f53a70c45703b1498acd",
-      idSeller:"5e1a0651741b255ddda996c4",
+      idSeller:"64ce8ef9567a2050d86bce9a",
       product: "Dress",
       price: "500.000",
       status: "Cancel",
@@ -52,7 +52,7 @@ export const rows = [
     {
       shopName: "XY Store",
       idBuyer:"64d4f53a70c45703b1498acd",
-      idSeller:"5e1a0651741b255ddda996c4",
+      idSeller:"64ce8ef9567a2050d86bce9a",
       product: "Trousers",
       price: "280.000",
       status: "Complete",
@@ -62,7 +62,7 @@ export const rows = [
     {
       shopName: "Fashion House",
       idBuyer:"64d4f53a70c45703b1498acd",
-      idSeller:"5e1a0651741b255ddda996c4",
+      idSeller:"64ce8ef9567a2050d86bce9a",
       product: "Summer Dress",
       price: "50.00",
       status: "Shipping",
@@ -72,7 +72,7 @@ export const rows = [
     {
       shopName: "Trendy Wear",
       idBuyer:"64d4f53a70c45703b1498acd",
-      idSeller:"5e1a0651741b255ddda996c4",
+      idSeller:"64ce8ef9567a2050d86bce9a",
       product: "Jeans",
       price: "70.00",
       status: "Expense",

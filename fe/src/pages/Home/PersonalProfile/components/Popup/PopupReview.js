@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Rating from '@mui/material/Rating';
 import {rows} from "../../data/orderData";
-
+import {postReview} from "../../../../../api/Review/postReview";
 export default function PopupReview ({finish , close, i}) {
   const [value, setValue] = useState(5);
   const [iscomfirm, setIsComfirm] = useState(false); 
@@ -18,23 +18,19 @@ export default function PopupReview ({finish , close, i}) {
       };
       Review(data);
       setIsComfirm(true);
-      console.log("Alo.bug goi ba")
-
     }
     else{
       setIsEmty(true);
-      console.log("Alo.checksum")
     }
   }
   const Review = async (data) => {
-    console.log(data);
-    // await postReview(data)
-    // .then((res) => {
-    //   console.log(res.data);
-    // })
-    // .catch((err) => {
-    //     console.log(err.response.data.message);
-    // });
+    await postReview(data)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+        console.log(err.response.data.message);
+    });
   };
     return (
       <div className ="container z-10 popUpmodal p-10 h-auto">
@@ -79,7 +75,7 @@ export default function PopupReview ({finish , close, i}) {
               </div>
           </div>
         :
-          <>
+          <div>
             <h1 className = "flex justify-center text-2xl	">Thank for your review</h1>
             <p className = "flex justify-center text-center mt-4 mx-12">If you have any problem with seller, please contact us by using report button</p>
             <div className ="mt-10 flex flex-col gap-y-5 ">
@@ -90,7 +86,7 @@ export default function PopupReview ({finish , close, i}) {
                 >Return to all order page</button>   
               </div>
             </div>
-          </>
+          </div>
         }
         </div>
     )

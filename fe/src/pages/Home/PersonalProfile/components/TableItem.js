@@ -26,7 +26,6 @@ const TableItem = ({rows}) => {
   }
   const finishReview = () => {
     setIsReview(false);
-    setIsAlReview(true);
   }
   const closeCancel = () => {
     setIsCancel(false);
