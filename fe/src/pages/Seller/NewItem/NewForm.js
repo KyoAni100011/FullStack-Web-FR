@@ -47,6 +47,11 @@ const NewProductForm = ({ tradeCode, role }) => {
     setLoading(true);
     e.preventDefault();
 
+    if (!e.target.description.value) {
+      alert("Please fill out your description");
+      return false;
+    }
+
     const formData = new FormData();
     formData.append("title", e.target.title.value);
     formData.append("description", e.target.description.value);
