@@ -189,6 +189,7 @@ export const getAllProducts = async (req, res) => {
     const skip = (page - 1) * limit;
 
     const products = await Product.find({
+      sold: 0,
       title: { $regex: searchQuery, $options: "i" },
     })
       .sort({ createdAt: -1 })
