@@ -145,6 +145,7 @@ export const getProductsByCategory = async (req, res) => {
 
     const skip = (page - 1) * limit;
     const products = await Product.find({
+      sold: 0,
       category: { $in: categorySlug }, // Tìm các sản phẩm có ít nhất một phần tử nằm trong mảng categorySlugs
     })
       .sort({ createdAt: -1 })
@@ -368,6 +369,7 @@ export const filterProductsByPrice = async (req, res) => {
 
     const skip = (page - 1) * limit;
     const products = await Product.find({
+      sold: 0,
       price: price, // Tìm các sản phẩm có ít nhất một phần tử nằm trong mảng categorySlugs
     })
       .sort({ createdAt: -1 })
