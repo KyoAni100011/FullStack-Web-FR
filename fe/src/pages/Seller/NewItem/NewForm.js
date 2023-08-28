@@ -29,11 +29,11 @@ const NewProductForm = ({ tradeCode, role }) => {
   const [selected, setSelected] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [productData, setProductData] = useState(null);
+  const [isLoading, setLoading] = useState(false);
   const [category, setCategory] = useState(
     JSON.parse(sessionStorage.getItem("listCategory")) || []
   );
   const [roleUser, setRoleUser] = useState(role);
-  console.log(selectedOptions);
   const handleChange = (selected) => {
     console.log(selected[0]);
     if (selected === null || selected === undefined) {
@@ -44,6 +44,7 @@ const NewProductForm = ({ tradeCode, role }) => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     const formData = new FormData();
@@ -82,6 +83,7 @@ const NewProductForm = ({ tradeCode, role }) => {
         const response = await createProduct(formData);
         console.log("Product created:", response);
       }
+      setLoading(false);
       if (roleUser === "seller") {
         window.location.href =
           "https://full-stack-web-fr-m48a.vercel.app/seller/all-item";
@@ -243,7 +245,7 @@ const NewProductForm = ({ tradeCode, role }) => {
               type="submit"
               className="mx-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex justify-center"
             >
-              {tradeCode ? "Update" : "Create"}
+              {isLoading ? "Loading..." : tradeCode ? "Update" : "Create"}
             </button>
           </div>
         </form>
