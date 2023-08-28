@@ -47,6 +47,11 @@ const NewProductForm = ({ tradeCode, role }) => {
     setLoading(true);
     e.preventDefault();
 
+    if (!e.target.description.value) {
+      alert("Please fill out your description");
+      return false;
+    }
+
     const formData = new FormData();
     formData.append("title", e.target.title.value);
     formData.append("description", e.target.description.value);
@@ -186,7 +191,6 @@ const NewProductForm = ({ tradeCode, role }) => {
               className="py-2 px-3 border focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"
               placeholder="Give us some descriptions about your product"
               defaultValue={productData?.description}
-              required
             ></textarea>
           </div>
           <Form
