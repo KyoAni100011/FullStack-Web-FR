@@ -203,7 +203,7 @@ const NewProductForm = ({ tradeCode, role }) => {
             <MultiSelect
               options={category || []}
               value={selected || []}
-              onChange={handleChange}
+              onChange={setSelected}
               labelledBy="Select"
               id="type"
             />
