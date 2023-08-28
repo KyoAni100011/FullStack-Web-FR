@@ -230,14 +230,14 @@ export const getVnPayReturn = async (req, res, next) => {
         .cookie("vnp_params", encodeURIComponent(JSON.stringify(vnp_Params)), {
           maxAge: 720000,
         })
-        .redirect(`http://localhost:3000/purchase`);
+        .redirect(`https://full-stack-web-fr-m48a.vercel.app/purchase`);
     } catch (err) {
       next(err);
     }
   } else {
     res
       .cookie("vnpay", "fail", vnp_Params["vnp_OrderInfo"], { maxAge: 720000 })
-      .redirect(`http://localhost:3000/purchase/`);
+      .redirect(`https://full-stack-web-fr-m48a.vercel.app/purchase/`);
   }
 };
 

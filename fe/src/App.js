@@ -10,7 +10,7 @@ let tokenRefreshInterval;
 const refreshTokenHandle = async (refreshToken) => {
   try {
     const response = await axios.get(
-      "http://localhost:5000/users/refresh_token",
+      "https://full-stack-web-fr.vercel.app/users/refresh_token",
       {
         headers: {
           refresh_token: refreshToken,

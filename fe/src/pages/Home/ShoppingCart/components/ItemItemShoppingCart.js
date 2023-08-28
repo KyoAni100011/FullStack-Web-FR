@@ -35,7 +35,7 @@ export default function ItemItemShoppingCart({
     );
 
     await instance
-      .post(`http://localhost:5000/carts/list_remove`, {
+      .post(`https://full-stack-web-fr.vercel.app/carts/list_remove`, {
         productId: id,
         cartId: JSON.parse(localStorage.getItem("cart"))._id,
       })

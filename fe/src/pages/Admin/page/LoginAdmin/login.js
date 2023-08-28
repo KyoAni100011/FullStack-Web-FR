@@ -30,7 +30,7 @@ export default function LoginAdmin() {
         setCookie("access_token", res.data.access_token, 1 * 24 * 60 * 60);
         setCookie("refresh_token", res.data.refresh_token, 3 * 24 * 60 * 60);
         axios
-          .get("http://localhost:5000/users/user_info", {
+          .get("https://full-stack-web-fr.vercel.app/users/user_info", {
             headers: {
               Authorization: `${res.data.access_token}`,
               "Content-Type": "application/x-www-form-urlencoded",
@@ -49,7 +49,7 @@ export default function LoginAdmin() {
           .catch((err) => console.log(err));
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         setMessage(err.responses);
       });
   };

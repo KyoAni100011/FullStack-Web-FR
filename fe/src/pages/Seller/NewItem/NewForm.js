@@ -33,7 +33,7 @@ const NewProductForm = ({ tradeCode, role }) => {
     JSON.parse(sessionStorage.getItem("listCategory")) || []
   );
   const [roleUser, setRoleUser] = useState(role);
-  console.log(selectedOptions)
+  console.log(selectedOptions);
   const handleChange = (selected) => {
     console.log(selected[0]);
     if (selected === null || selected === undefined) {
@@ -51,7 +51,7 @@ const NewProductForm = ({ tradeCode, role }) => {
     formData.append("description", e.target.description.value);
     formData.append("price", e.target.price.value);
     formData.append("brandName", e.target.brand.value);
-    
+
     if (imageFile instanceof File) {
       console.log(1);
       formData.append("image", imageFile); // Thêm hình ảnh mới vào formData nếu có sự thay đổi
@@ -83,10 +83,11 @@ const NewProductForm = ({ tradeCode, role }) => {
         console.log("Product created:", response);
       }
       if (roleUser === "seller") {
-        window.location.href = "http://localhost:3000/seller/all-item";
+        window.location.href =
+          "https://full-stack-web-fr-m48a.vercel.app/seller/all-item";
       } else {
         window.location.href =
-          "http://localhost:3000/admin/usemanagement/allitems";
+          "https://full-stack-web-fr-m48a.vercel.app/admin/usemanagement/allitems";
       }
     } catch (error) {
       console.error("Error creating product:", error.message);
@@ -133,7 +134,6 @@ const NewProductForm = ({ tradeCode, role }) => {
         productData.category.includes(option.value)
       );
       setSelectedOptions(selected);
-      
     }
   }, [productData]);
 

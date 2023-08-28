@@ -79,17 +79,25 @@ export default function Signup() {
       type: "SET_STATUS_DIALOG",
       payload: {
         stateDialogEmail: !ValidationEmail(formData.email) ? false : true,
-        stateDialogUsername: formData.username.length >= 3 && formData.username.length <= 50 ? true : false,
-        stateDialogPassword: formData.password.length >= 6 && formData.password.length <= 20 ? true : false,
+        stateDialogUsername:
+          formData.username.length >= 3 && formData.username.length <= 50
+            ? true
+            : false,
+        stateDialogPassword:
+          formData.password.length >= 6 && formData.password.length <= 20
+            ? true
+            : false,
       },
     });
 
-    if (formData.confirm_password !== formData.password) setStateConfirmPassword(false)
+    if (formData.confirm_password !== formData.password)
+      setStateConfirmPassword(false);
     else setStateConfirmPassword(true);
 
     if (
       ValidationEmail(formData.email) &&
-      formData.password !== "" && formData.confirm_password === formData.password
+      formData.password !== "" &&
+      formData.confirm_password === formData.password
     ) {
       setLoading(true);
       const { email, password, username, role } = formData;
@@ -103,7 +111,7 @@ export default function Signup() {
           setCookie("access_token", res.data.access_token, 1 * 24 * 60 * 60);
           setCookie("refresh_token", res.data.refresh_token, 3 * 24 * 60 * 60);
           axios
-            .get("http://localhost:5000/users/user_info", {
+            .get("https://full-stack-web-fr.vercel.app/users/user_info", {
               headers: {
                 Authorization: `${res.data.access_token}`,
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -149,16 +157,18 @@ export default function Signup() {
               id="username"
               type="text"
               name="username"
-              className={`py-2 px-3 border focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full ${!stateDialog.stateDialogUsername
-                ? "border-red-300"
-                : "border-gray-300"
-                }`}
+              className={`py-2 px-3 border focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full ${
+                !stateDialog.stateDialogUsername
+                  ? "border-red-300"
+                  : "border-gray-300"
+              }`}
               onChange={(e) => handleSignUpInputChange(e)}
             />
           </div>
           <div
-            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${!stateDialog.stateDialogUsername ? "block" : "hidden"
-              } `}
+            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${
+              !stateDialog.stateDialogUsername ? "block" : "hidden"
+            } `}
           >
             <PriorityHighIcon className="icon-alert"></PriorityHighIcon>
             <div className="alert-content text-xs ml-2">
@@ -173,16 +183,18 @@ export default function Signup() {
               id="email"
               type="email"
               name="email"
-              className={`py-2 px-3 border focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full ${!stateDialog.stateDialogEmail
-                ? "border-red-300"
-                : "border-gray-300"
-                }`}
+              className={`py-2 px-3 border focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full ${
+                !stateDialog.stateDialogEmail
+                  ? "border-red-300"
+                  : "border-gray-300"
+              }`}
               onChange={(e) => handleSignUpInputChange(e)}
             />
           </div>
           <div
-            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${!stateDialog.stateDialogEmail ? "block" : "hidden"
-              } `}
+            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${
+              !stateDialog.stateDialogEmail ? "block" : "hidden"
+            } `}
           >
             <PriorityHighIcon className="icon-alert"></PriorityHighIcon>
             <div className="alert-content text-xs ml-2">
@@ -197,16 +209,18 @@ export default function Signup() {
               id="password"
               type="password"
               name="password"
-              className={`py-2 px-3 border focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full ${!stateDialog.stateDialogPassword
-                ? "border-red-300"
-                : "border-gray-300"
-                }`}
+              className={`py-2 px-3 border focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full ${
+                !stateDialog.stateDialogPassword
+                  ? "border-red-300"
+                  : "border-gray-300"
+              }`}
               onChange={(e) => handleSignUpInputChange(e)}
             />
           </div>
           <div
-            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${!stateDialog.stateDialogPassword ? "block" : "hidden"
-              } `}
+            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${
+              !stateDialog.stateDialogPassword ? "block" : "hidden"
+            } `}
           >
             <PriorityHighIcon className="icon-alert"></PriorityHighIcon>
             <div className="alert-content text-xs ml-2">
@@ -221,14 +235,16 @@ export default function Signup() {
               id="password_confirm"
               type="password"
               name="confirm_password"
-              className={`py-2 px-3 border focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full ${!stateConfirmPassword ? "border-red-300" : "border-gray-300"
-                }`}
+              className={`py-2 px-3 border focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full ${
+                !stateConfirmPassword ? "border-red-300" : "border-gray-300"
+              }`}
               onChange={(e) => handleSignUpInputChange(e)}
             />
           </div>
           <div
-            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${stateConfirmPassword ? "hidden" : "block"
-              } `}
+            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${
+              stateConfirmPassword ? "hidden" : "block"
+            } `}
           >
             <PriorityHighIcon className="icon-alert"></PriorityHighIcon>
             <div className="alert-content text-xs ml-2">
@@ -236,8 +252,9 @@ export default function Signup() {
             </div>
           </div>
           <div
-            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${message !== "" ? "block" : "hidden"
-              }`}
+            className={`alert-box-inner alert-container mb-4 flex font-semibold text-red-600 ${
+              message !== "" ? "block" : "hidden"
+            }`}
           >
             <PriorityHighIcon className="icon-alert"></PriorityHighIcon>
             <div className="alert-content text-xs ml-2">
