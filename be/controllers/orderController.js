@@ -74,7 +74,7 @@ export const getOrdersByUserId = async (req, res) => {
     const skip = (page - 1) * limit;
 
     let ordersCount = await Order.find()
-    consol.log(ordersCount);
+    console.log(ordersCount);
 
     if (!ordersCount) {
       console.log("No orders found for this buyer.");
